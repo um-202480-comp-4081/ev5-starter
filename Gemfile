@@ -89,3 +89,15 @@ gem 'bootswatch', github: 'thomaspark/bootswatch', tag: 'v5.2.3'
 
 # Bootstrap-styled rails form helpers
 gem 'bootstrap_form', '~> 5.2.3'
+
+# Testing framework
+gem 'rspec-rails', '~> 6.1.3', group: %i[development test]
+
+# Fixtures replacement
+gem 'factory_bot_rails', group: %i[development test]
+
+# Autorun tests in development with 'bundle exec guard init rspec' && 'bundle exec guard'
+gem 'guard-rspec', require: false, group: %i[development test]
+
+# Adds controller testing assertions
+gem 'rails-controller-testing', group: %i[development test]
