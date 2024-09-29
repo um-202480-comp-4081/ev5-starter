@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   BOOTSTRAP_ALERT_CLASS = {
     'success' => 'alert-success',
@@ -10,5 +12,4 @@ module ApplicationHelper
   def alert_class(flash_key)
     BOOTSTRAP_ALERT_CLASS.fetch(flash_key, 'alert-info')
   end
-
 end
