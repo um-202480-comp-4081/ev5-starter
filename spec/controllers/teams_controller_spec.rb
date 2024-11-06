@@ -5,8 +5,8 @@ require 'rubocop'
 
 RSpec.describe TeamsController do
   it 'has no nested method definitions' do
-    result = RuboCop::CLI.new.run(['--only', 'Style/NestedMethodDefinition', 'app/controllers'])
-    expect(result).to eq(0), 'Rubocop detected nested method definitions in controllers.'
+    result = RuboCop::CLI.new.run(['--only', 'Lint/NestedMethodDefinition', 'app/controllers/teams_controller.rb'])
+    expect(result).to eq(0), "Rubocop detected nested method definitions in #{described_class}."
   end
 
   it 'defines required actions' do

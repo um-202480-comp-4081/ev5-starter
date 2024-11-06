@@ -7,8 +7,8 @@ RSpec.describe PlayersController do
   let(:team) { create(:team) }
 
   it 'has no nested method definitions' do
-    result = RuboCop::CLI.new.run(['--only', 'Style/NestedMethodDefinition', 'app/controllers'])
-    expect(result).to eq(0), 'Rubocop detected nested method definitions in controllers.'
+    result = RuboCop::CLI.new.run(['--only', 'Lint/NestedMethodDefinition', 'app/controllers/players_controller.rb'])
+    expect(result).to eq(0), "Rubocop detected nested method definitions in #{described_class}."
   end
 
   it 'defines required actions' do
@@ -40,6 +40,12 @@ RSpec.describe PlayersController do
       get :show, params: { id: player, team_id: player.team }
       expect(response).to render_template(:show)
     end
+
+    it 'errors on mismatched team and player ids' do
+      team_two = create(:team)
+
+      expect { get :show, params: { id: player, team_id: team_two } }.to raise_error ActiveRecord::RecordNotFound
+    end
   end
 
   describe 'GET #new' do
@@ -65,6 +71,12 @@ RSpec.describe PlayersController do
     it 'renders the edit template' do
       get :edit, params: { id: player, team_id: player.team }
       expect(response).to render_template(:edit)
+    end
+
+    it 'errors on mismatched team and player ids' do
+      team_two = create(:team)
+
+      expect { get :edit, params: { id: player, team_id: team_two } }.to raise_error ActiveRecord::RecordNotFound
     end
   end
 
@@ -125,6 +137,12 @@ RSpec.describe PlayersController do
         expect(response).to render_template(:edit)
       end
     end
+
+    it 'errors on mismatched team and player ids' do
+      team_two = create(:team)
+
+      expect { patch :update, params: { id: player, player: attributes_for(:player), team_id: team_two } }.to raise_error ActiveRecord::RecordNotFound
+    end
   end
 
   describe 'DELETE #destroy' do
@@ -139,6 +157,12 @@ RSpec.describe PlayersController do
     it 'redirects to the players list' do
       delete :destroy, params: { id: player, team_id: player.team }
       expect(response).to redirect_to(team_players_url)
+    end
+
+    it 'errors on mismatched team and player ids' do
+      team_two = create(:team)
+
+      expect { delete :destroy, params: { id: player, team_id: team_two } }.to raise_error ActiveRecord::RecordNotFound
     end
   end
 end

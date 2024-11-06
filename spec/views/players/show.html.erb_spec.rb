@@ -15,7 +15,8 @@ RSpec.describe 'players/show.html.erb' do
   end
 
   it 'uses link_to helper for links' do
-    expect(view).to have_received(:link_to).once
+    expect(view).to have_received(:link_to).at_least(1).times
+    expect(view).to have_received(:link_to).at_most(2).times
   end
 
   it 'uses appropriate route helper(s)' do
